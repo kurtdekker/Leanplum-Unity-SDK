@@ -52,26 +52,16 @@ namespace LeanplumSDK
         {
             get
             {
-                if (instance != null)
+                if (!instance)
                 {
-                    return instance;
-                }
-
-                // Object not found - create and store a new one.
-                instance = FindObjectOfType(typeof(LeanplumUnityHelper)) as LeanplumUnityHelper;
-
-                GameObject container = new GameObject("LeanplumUnityHelper", typeof(LeanplumUnityHelper));
-                instance = container.GetComponent<LeanplumUnityHelper>();
-                if (instance == null)
-                {
-                    LeanplumNative.CompatibilityLayer.LogError("Problem during the creation of LeanplumUnityHelper.");
+                    GameObject container = new GameObject("LeanplumUnityHelper", typeof(LeanplumUnityHelper));
+                    instance = container.GetComponent<LeanplumUnityHelper>();
+                    if (!instance)
+                    {
+                        LeanplumNative.CompatibilityLayer.LogError("Problem during the creation of LeanplumUnityHelper.");
+                    }
                 }
                 return instance;
-            }
-
-            private set
-            {
-                instance = value;
             }
         }
 
